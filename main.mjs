@@ -3,8 +3,6 @@ console.clear();
 
 import { 
     grid_width, grid_height,
-
-    refreshPosition,
     move_a,move_r
 } from './modules/units.mjs'; 
 
@@ -30,8 +28,8 @@ var units = [];
 var tiles;
 
 var player;
-var cursors;
 
+var cursors;
 
 var game = new Phaser.Game(config);
 
@@ -55,15 +53,23 @@ function create ()
     //player
     units = this.physics.add.staticGroup();
     player = units.create(0,0,'player');
-    
-    move_a(player, 1, 1);
-    move_r(player, 1, 0);
+    move_a(player, 0, 0);
 
+    //user inputs
+    cursors = this.input.keyboard.createCursorKeys();
 }
 
 function update ()
 {
-   
+    if(!cursors.canMove && cursors.right.isUp && cursors.left.isUp
+        && cursors.up.isUp && cursors.down.isUp ){
+        cursors.canMove = true;
+    }
+    else if(cursors.right.isDown && cursors.canMove)
+    {
+        move_r(player, 1, 0);
+        cursors.canMove = false;
+    }
 }
 
 
