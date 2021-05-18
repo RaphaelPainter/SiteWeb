@@ -1,2 +1,3 @@
-refactor main.update => one call to move_r
-resize dynamically all the sprites
+refactor(one call to move_r @main.update)
+feat(resize world dynamically)
+feat(config choose if rapidfire or no @main.updatet)
