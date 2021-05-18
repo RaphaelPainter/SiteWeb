@@ -1,0 +1,2 @@
+refactor main.update => one call to move_r
+resize dynamically all the sprites

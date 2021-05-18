@@ -1,5 +1,5 @@
 
-const logMode = true;
+const logMode = false;
 function log(msg){
     if(logMode){
         console.log("units.mjs: " + " " + msg)
@@ -16,6 +16,8 @@ export const grid_gap_width= 1;
 
 export const tile_height = 64;
 export const tile_width= 64;
+
+export var zoom = 0.5;
 
 
 export function apply(units, fun){

@@ -3,7 +3,8 @@ console.clear();
 
 import { 
     grid_width, grid_height,
-    move_a,move_r
+    move_a,move_r,
+    zoom
 } from './modules/units.mjs'; 
 
 var config = {
@@ -46,6 +47,7 @@ function create ()
     for(let i = 0;i<grid_height;i++){
         for(let j = 0;j<grid_width;j++){
             let tile = tiles.create(0,0,'tile');
+            tile.setScale(zoom);
             move_a(tile, i, j);
         }
     }
