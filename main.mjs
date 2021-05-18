@@ -69,6 +69,18 @@ function update ()
     {
         move_r(player, 1, 0);
         cursors.canMove = false;
+    }else if(cursors.left.isDown && cursors.canMove)
+    {
+        move_r(player, -1, 0);
+        cursors.canMove = false;
+    }else if(cursors.up.isDown && cursors.canMove)
+    {
+        move_r(player, 0, -1);
+        cursors.canMove = false;
+    }else if(cursors.down.isDown && cursors.canMove)
+    {
+        move_r(player, 0, 1);
+        cursors.canMove = false;
     }
 }
 

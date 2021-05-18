@@ -8,8 +8,8 @@ function log(msg){
 export const world_offset_height= 50;
 export const world_offset_width = 50;
 
-export const grid_width = 3;
-export const grid_height= 3;
+export const grid_width = 100;
+export const grid_height= 100;
 
 export const grid_gap_height = 1;
 export const grid_gap_width= 1;
@@ -44,7 +44,7 @@ export function move_r(unit,height_offset , width_offset){
     move_a(unit,unit.idx+height_offset , unit.idy+width_offset)
 } 
 
-export function isValidPosition(width_idx,height_idx){
+export function isValidPosition(height_idx,width_idx){
     if(height_idx < 0 || height_idx >= grid_height){
         return false;
     }else if(width_idx < 0 || width_idx >= grid_width){ 
