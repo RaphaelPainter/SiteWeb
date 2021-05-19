@@ -8,8 +8,8 @@ function log(msg){
 export const world_offset_height= 50;
 export const world_offset_width = 50;
 
-export const grid_width = 100;
-export const grid_height= 100;
+export const grid_width = 10;
+export const grid_height= 10;
 
 export const grid_gap_height = 1;
 export const grid_gap_width= 1;
@@ -27,8 +27,8 @@ export function apply(units, fun){
 }
 
 export function refreshPosition(unit){
-        unit.setX(world_offset_width+unit.idx *(tile_width+grid_gap_width))
-        unit.setY(world_offset_height+unit.idy *(tile_height+grid_gap_height))
+        unit.setX(world_offset_width+unit.idx *(tile_width+grid_gap_width)*zoom)
+        unit.setY(world_offset_height+unit.idy *(tile_height+grid_gap_height)*zoom)
     }
 
 export function move_a(unit,width_idx,height_idx){
@@ -54,6 +54,12 @@ export function isValidPosition(height_idx,width_idx){
     }else{
         return true;
     }
+}
+
+export function new_(spriteName, group){
+    let sprite = group.create(0,0,spriteName);
+    sprite.setScale(zoom);
+    return sprite;
 }
 
 

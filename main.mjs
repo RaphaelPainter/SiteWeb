@@ -4,7 +4,8 @@ console.clear();
 import { 
     grid_width, grid_height,
     move_a,move_r,
-    zoom
+    zoom,
+    new_
 } from './modules/units.mjs'; 
 
 var config = {
@@ -46,15 +47,15 @@ function create ()
     tiles = this.physics.add.staticGroup();
     for(let i = 0;i<grid_height;i++){
         for(let j = 0;j<grid_width;j++){
-            let tile = tiles.create(0,0,'tile');
-            tile.setScale(zoom);
-            move_a(tile, i, j);
+           let tile = new_('tile',tiles);
+           move_a(tile, i, j);
         }
     }
 
     //player
     units = this.physics.add.staticGroup();
     player = units.create(0,0,'player');
+    player.setScale(zoom);
     move_a(player, 0, 0);
 
     //user inputs
