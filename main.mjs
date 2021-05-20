@@ -1,11 +1,10 @@
-console.clear();
-
 
 import { 
     grid_width, grid_height,
     move_a,move_r,
     zoom,
-    new_
+    new_,
+    input_xaxis,input_yaxis
 } from './modules/units.mjs'; 
 
 var config = {
@@ -43,6 +42,7 @@ function preload ()
 
 function create ()
 {
+    console.clear();
     // grid
     tiles = this.physics.add.staticGroup();
     for(let i = 0;i<grid_height;i++){
@@ -64,25 +64,8 @@ function create ()
 
 function update ()
 {
-    if(!cursors.canMove && cursors.right.isUp && cursors.left.isUp
-        && cursors.up.isUp && cursors.down.isUp ){
-        cursors.canMove = true;
-    }
-    else if(cursors.right.isDown && cursors.canMove)
-    {
-        move_r(player, 1, 0);
-        cursors.canMove = false;
-    }else if(cursors.left.isDown && cursors.canMove)
-    {
-        move_r(player, -1, 0);
-        cursors.canMove = false;
-    }else if(cursors.up.isDown && cursors.canMove)
-    {
-        move_r(player, 0, -1);
-        cursors.canMove = false;
-    }else if(cursors.down.isDown && cursors.canMove)
-    {
-        move_r(player, 0, 1);
+    if(true){
+        move_r(player, input_xaxis(cursors), input_yaxis(cursors));
         cursors.canMove = false;
     }
 }

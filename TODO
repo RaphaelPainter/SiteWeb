@@ -1,3 +1,2 @@
-refactor(one call to move_r @main.update)
 feat(resize world dynamically)
 feat(config choose if rapidfire or no @main.updatet)
