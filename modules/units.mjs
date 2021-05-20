@@ -20,8 +20,8 @@ export const tile_width= 64;
 export var zoom = 0.5;
 
 
-export function apply(units, fun){
-    units.array.forEach(e => {
+export function apply(group, fun){
+    group.array.forEach(e => {
         fun(e);
     });
 }
