@@ -1,3 +1,4 @@
 feat(resize world dynamically)
-feat(setup configurable time btwn inputs)
-feat(setup configurable input keys)
+feat(configurable time btwn inputs)
+feat(configurable input keys)
+feat(configurable camera flwg player)
