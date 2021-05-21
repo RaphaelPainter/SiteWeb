@@ -20,11 +20,13 @@ export const tile_width= 64;
 export var zoom = 0.5;
 
 
-export function apply(group, fun){
-    group.array.forEach(e => {
-        fun(e);
+export function apply(group, fun, ... param){
+    group.getChildren().forEach(e => {
+        fun(e, param);
     });
 }
+
+
 
 export function refreshPosition(unit){
         unit.setX(world_offset_width+unit.idx *(tile_width+grid_gap_width)*zoom)
@@ -82,5 +84,14 @@ export function input_xaxis(cursors){
     }
 }
 
+export function changeZoom(value, group){
+    zoom = value;
+    apply(group, setScale_, value);
+    apply(group, refreshPosition)
+}
+
+function setScale_(unit, value){
+    unit.setScale(value)
+}
 
 

@@ -2,7 +2,7 @@
 import { 
     grid_width, grid_height,
     move_a,move_r,
-    zoom,
+    zoom, changeZoom,
     new_,
     input_xaxis,input_yaxis
 } from './modules/units.mjs'; 
@@ -67,7 +67,11 @@ function update ()
     if(true){
         move_r(player, input_xaxis(cursors), input_yaxis(cursors));
         cursors.canMove = false;
+        
+    changeZoom(1,units);
+    changeZoom(1, tiles);
     }
+   
 }
 
 
