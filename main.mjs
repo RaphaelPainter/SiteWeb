@@ -3,9 +3,12 @@ import {
     grid_width, grid_height,
     move_a,move_r,
     zoom_, resizeWorld,
-    new_,
-    input_xaxis,input_yaxis
+    new_
 } from './modules/units.mjs'; 
+
+import {
+    input_xaxis,input_yaxis
+} from './modules/inputs.mjs'; 
 
 var config = {
     type: Phaser.AUTO,
@@ -22,7 +25,7 @@ var config = {
         preload: preload,
         create: create,
         update: update
-    }
+    },
 };
 
 var tiles;
@@ -42,7 +45,7 @@ function preload ()
 
 function create ()
 {
-    console.clear();
+    //console.clear();
     // grid
     tiles = this.physics.add.staticGroup();
     for(let i = 0;i<grid_height;i++){
@@ -61,6 +64,14 @@ function create ()
     //user inputs
     cursors = this.input.keyboard.createCursorKeys();
 
+    document.onwheel = zoom;
+    function zoom(event) {
+        if(event.deltaY < 0 && zoom_() < 4.5 ){
+            resizeWorld(zoom_()-event.deltaY/100*0.25, player, tiles);
+        }else if(event.deltaY > 0 && zoom_() > 0.5 ){
+            resizeWorld(zoom_()-event.deltaY/100*0.25, player, tiles);
+        }
+    }
     
 }
 
@@ -69,9 +80,6 @@ function update ()
     if(true){
         move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
         cursors.canMove = false;
-    }
-    if(cursors.up.isDown){
-        resizeWorld(zoom_()+0.1, player, tiles);
     }
 }
 
