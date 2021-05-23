@@ -1,4 +1,7 @@
-feat(resize world dynamically with molette)
+feat(smooth zoom)
 feat(configurable time btwn inputs)
 feat(input keys: ZQSD and arrows, easly editable in code)
 feat(configurable camera flwg player yes/no)
+feat(configurable speed in % screen)
+
+feat()
