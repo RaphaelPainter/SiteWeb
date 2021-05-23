@@ -84,14 +84,22 @@ export function input_xaxis(cursors){
     }
 }
 
-export function changeZoom(value, group){
-    zoom = value;
-    apply(group, setScale_, value);
+export function zoom_group(value, group){
+    apply(group, zoom_unit, value);
     apply(group, refreshPosition)
 }
 
-function setScale_(unit, value){
+function zoom_unit(unit, value){
     unit.setScale(value)
+}
+
+export function resizeWorld(value, ... groups){
+    zoom = value;
+    groups.forEach(e=> {zoom_group(value, e)})
+}
+
+export function zoom_(){
+    return zoom;
 }
 
 

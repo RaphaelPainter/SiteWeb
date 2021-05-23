@@ -2,7 +2,7 @@
 import { 
     grid_width, grid_height,
     move_a,move_r,
-    zoom, changeZoom,
+    zoom_, resizeWorld,
     new_,
     input_xaxis,input_yaxis
 } from './modules/units.mjs'; 
@@ -25,10 +25,10 @@ var config = {
     }
 };
 
-var units = [];
 var tiles;
 
 var player;
+var player_unit
 
 var cursors;
 
@@ -53,25 +53,26 @@ function create ()
     }
 
     //player
-    units = this.physics.add.staticGroup();
-    player = units.create(0,0,'player');
-    player.setScale(zoom);
-    move_a(player, 0, 0);
+    player = this.physics.add.staticGroup();
+    player_unit = player.create(0,0,'player');
+    player_unit.setScale(zoom_());
+    move_a(player_unit, 0, 0);
 
     //user inputs
     cursors = this.input.keyboard.createCursorKeys();
+
+    
 }
 
 function update ()
 {
     if(true){
-        move_r(player, input_xaxis(cursors), input_yaxis(cursors));
+        move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
         cursors.canMove = false;
-        
-    changeZoom(1,units);
-    changeZoom(1, tiles);
     }
-   
+    if(cursors.up.isDown){
+        resizeWorld(zoom_()+0.1, player, tiles);
+    }
 }
 
 
