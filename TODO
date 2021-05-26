@@ -1,6 +1,1 @@
-feat(configurable time btwn inputs)
-feat(input keys: ZQSD and arrows, easly editable in code)
-feat(configurable camera flwg player yes/no)
-feat(configurable speed in % screen)
-
-feat()
+refactor(all)
