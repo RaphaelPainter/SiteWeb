@@ -6,8 +6,9 @@ import {
     new_,
     input_xaxis, input_yaxis,
 
-    rythm_activated,rythm_var_displayed,rythm_breakable, 
-    numberOfTicks, rythm_char,time_between_ticks
+    rythm_activated,rythm_bar_displayed,rythm_breakable, 
+    numberOfTicks, rythm_char,time_between_ticks, 
+    event_rythmBreakable,init_rythm_var
 } from './modules/units.mjs'; 
 
 
@@ -36,9 +37,8 @@ var player_unit
 
 var cursors;
 
-var rythm_bar;
-var rythm_text="";
-var subTick_idx = 0;
+var rythm = {};
+var subTick = {};
 var movedSinceLastTick = false;
 
 var game = new Phaser.Game(config);
@@ -52,6 +52,7 @@ function preload ()
 function create ()
 {
     console.clear();
+    
     // grid
     tiles = this.physics.add.staticGroup();
     for(let i = 0;i<grid_height;i++){
@@ -72,17 +73,16 @@ function create ()
     
     //setup tick calls
     if(rythm_activated){
-        if(rythm_var_displayed){
-            rythm_bar = document.getElementById("rythm_bar");
-            for(let i = 0;i<numberOfTicks;i++){
-                rythm_text += rythm_char; 
-            }
+        if(rythm_bar_displayed){
+            init_rythm_var(rythm);
             setInterval(tick_withRythmBar, time_between_ticks);
         }else{
             setInterval(tick_noRythmBar, time_between_ticks);
         }
     }
-    
+    if(rythm_breakable){
+        event_rythmBreakable(document, player_unit, subTick);
+    }
 }
 
 
@@ -92,26 +92,11 @@ function update() {
 }
 
 
-if(rythm_breakable){
-    document.addEventListener('keydown', (e) => {
-        if(!e.repeat ){
-            if(e.keyCode == 39 ){
-                move_r(player_unit, 1,0);
-            }if(e.keyCode == 37 ){
-                move_r(player_unit, -1,0);
-            }if(e.keyCode == 38 ){
-                move_r(player_unit, 0,-1);
-            }if(e.keyCode == 40 ){
-                move_r(player_unit, 0,1);
-            }
-            subTick_idx = 1;
-        }
-  });
-}
+
 function tick_withRythmBar(){
-    subTick_idx++;
-    rythm_bar.innerHTML = 
-    rythm_text.substr(subTick_idx-2,numberOfTicks);
+    subTick.idx++;
+    rythm.bar.innerHTML = 
+    rythm.text.substr(subTick.idx-2,numberOfTicks);
     if(!movedSinceLastTick){
         if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
             if(!rythm_breakable){
@@ -120,11 +105,12 @@ function tick_withRythmBar(){
             movedSinceLastTick = true;
         }
     }
-    if(subTick_idx > numberOfTicks){
-        subTick_idx = 1;
+    if(subTick.idx > numberOfTicks){
+        subTick.idx = 1;
         movedSinceLastTick = false;
     }
 }
+
 function tick_noRythmBar(){
     subTick_idx++;
     if(!movedSinceLastTick){

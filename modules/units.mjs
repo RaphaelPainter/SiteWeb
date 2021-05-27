@@ -21,7 +21,7 @@ export var zoom = 0.5;
 
 export var rythm_activated = true;
 export var rythm_breakable = true;
-export var rythm_var_displayed = true;
+export var rythm_bar_displayed = true;
 export var numberOfTicks = 20;
 export var rythm_char = '⯀';
 export var time_between_ticks = 20;
@@ -118,6 +118,31 @@ export function input_xaxis(cursors){
         return 1;
     }
 }
+
+export function event_rythmBreakable(document, player_unit, subTick){
+    document.addEventListener('keydown', (e) => {
+        if(!e.repeat ){
+            if(e.keyCode == 39 ){
+                move_r(player_unit, 1,0);
+            }if(e.keyCode == 37 ){
+                move_r(player_unit, -1,0);
+            }if(e.keyCode == 38 ){
+                move_r(player_unit, 0,-1);
+            }if(e.keyCode == 40 ){
+                move_r(player_unit, 0,1);
+            }
+            subTick.idx = 1;
+        }
+  });
+}
+
+export function init_rythm_var(rythm){
+    rythm.bar = document.getElementById("rythm_bar");
+    rythm.text="";
+    for(let i = 0;i<numberOfTicks;i++){
+        rythm.text += rythm_char; 
+    }
+  }
 
 
 
