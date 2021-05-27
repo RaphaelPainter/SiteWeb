@@ -19,6 +19,13 @@ export const tile_width= 64;
 
 export var zoom = 0.5;
 
+export var rythm_activated = true;
+export var rythm_breakable = true;
+export var rythm_var_displayed = true;
+export var numberOfTicks = 20;
+export var rythm_char = '⯀';
+export var time_between_ticks = 20;
+
 
 export function apply(group, fun, ... param){
     group.getChildren().forEach(e => {
@@ -111,5 +118,7 @@ export function input_xaxis(cursors){
         return 1;
     }
 }
+
+
 
 
