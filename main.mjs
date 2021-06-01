@@ -4,11 +4,12 @@ import {
     move_a,move_r,
     zoom_,
     new_,
-    input_xaxis, input_yaxis,
+    
 
     rythm_activated,rythm_bar_displayed,rythm_breakable, 
-    numberOfTicks, rythm_char,time_between_ticks, 
-    event_rythmBreakable,init_rythm_var
+    time_between_ticks, 
+    event_rythmBreakable,init_rythm_var,
+    tick_withRythmBar,tick_noRythmBar,
 } from './modules/units.mjs'; 
 
 
@@ -38,8 +39,6 @@ var player_unit
 var cursors;
 
 var rythm = {};
-var subTick = {};
-var movedSinceLastTick = false;
 
 var game = new Phaser.Game(config);
 
@@ -72,16 +71,23 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
     
     //setup tick calls
+    rythm.subTick = {};
+    rythm.movedSinceLastTick = false;
+
     if(rythm_activated){
         if(rythm_bar_displayed){
             init_rythm_var(rythm);
-            setInterval(tick_withRythmBar, time_between_ticks);
+            setInterval(()=>{
+                tick_withRythmBar(rythm, cursors)
+            } ,time_between_ticks);
         }else{
-            setInterval(tick_noRythmBar, time_between_ticks);
+            setInterval(()=>{
+                tick_noRythmBar(rythm, cursors)
+            }, time_between_ticks);
         }
     }
     if(rythm_breakable){
-        event_rythmBreakable(document, player_unit, subTick);
+        event_rythmBreakable(document, player_unit, rythm.subTick);
     }
 }
 
@@ -93,39 +99,6 @@ function update() {
 
 
 
-function tick_withRythmBar(){
-    subTick.idx++;
-    rythm.bar.innerHTML = 
-    rythm.text.substr(subTick.idx-2,numberOfTicks);
-    if(!movedSinceLastTick){
-        if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
-            if(!rythm_breakable){
-                move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
-            }
-            movedSinceLastTick = true;
-        }
-    }
-    if(subTick.idx > numberOfTicks){
-        subTick.idx = 1;
-        movedSinceLastTick = false;
-    }
-}
-
-function tick_noRythmBar(){
-    subTick_idx++;
-    if(!movedSinceLastTick){
-        if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
-            if(!rythm_breakable){
-                move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
-            }
-            movedSinceLastTick = true;
-        }
-    }
-    if(subTick_idx > numberOfTicks){
-        subTick_idx = 1;
-        movedSinceLastTick = false;
-    }
-}
 
 
 

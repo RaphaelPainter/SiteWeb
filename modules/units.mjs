@@ -5,6 +5,13 @@ function log(msg){
         console.log("units.mjs: " + " " + msg)
     }
 }
+
+export function apply(group, fun, ... param){
+    group.getChildren().forEach(e => {
+        fun(e, param);
+    });
+}
+
 export const world_offset_height= 50;
 export const world_offset_width = 50;
 
@@ -16,23 +23,6 @@ export const grid_gap_width= 1;
 
 export const tile_height = 64;
 export const tile_width= 64;
-
-export var zoom = 0.5;
-
-export var rythm_activated = true;
-export var rythm_breakable = true;
-export var rythm_bar_displayed = true;
-export var numberOfTicks = 20;
-export var rythm_char = '⯀';
-export var time_between_ticks = 20;
-
-
-export function apply(group, fun, ... param){
-    group.getChildren().forEach(e => {
-        fun(e, param);
-    });
-}
-
 
 
 export function refreshPosition(unit){
@@ -71,6 +61,27 @@ export function new_(spriteName, group){
     return sprite;
 }
 
+export function input_yaxis(cursors){
+    if(cursors.up.isUp && cursors.down.isUp){
+        return 0;
+    }else if(cursors.up.isDown){
+        return -1;
+    }else if(cursors.down.isDown){
+        return 1;
+    }
+}
+
+export function input_xaxis(cursors){
+    if(cursors.right.isUp && cursors.left.isUp){
+        return 0;
+    }else if(cursors.left.isDown){
+        return -1;
+    }else if(cursors.right.isDown){
+        return 1;
+    }
+}
+
+export var zoom = 0.5;
 
 
 export function zoom_group(value, group){
@@ -99,25 +110,13 @@ export function zoomEvent(event, player, tiles) {
     }
 }
 
-export function input_yaxis(cursors){
-    if(cursors.up.isUp && cursors.down.isUp){
-        return 0;
-    }else if(cursors.up.isDown){
-        return -1;
-    }else if(cursors.down.isDown){
-        return 1;
-    }
-}
 
-export function input_xaxis(cursors){
-    if(cursors.right.isUp && cursors.left.isUp){
-        return 0;
-    }else if(cursors.left.isDown){
-        return -1;
-    }else if(cursors.right.isDown){
-        return 1;
-    }
-}
+export var rythm_activated = true;
+export var rythm_breakable = true;
+export var rythm_bar_displayed = true;
+export var numberOfTicks = 20;
+export var rythm_char = '⯀';
+export var time_between_ticks = 20;
 
 export function event_rythmBreakable(document, player_unit, subTick){
     document.addEventListener('keydown', (e) => {
@@ -145,5 +144,38 @@ export function init_rythm_var(rythm){
   }
 
 
+  export function tick_withRythmBar(rythm, cursors){
+    rythm.subTick.idx++;
+    rythm.bar.innerHTML = 
+    rythm.text.substr(rythm.subTick.idx-2,numberOfTicks);
+    if(!rythm.movedSinceLastTick){
+        if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
+            if(!rythm_breakable){
+                move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
+            }
+            rythm.movedSinceLastTick = true;
+        }
+    }
+    if(rythm.subTick.idx > numberOfTicks){
+        rythm.subTick.idx = 1;
+        rythm.movedSinceLastTick = false;
+    }
+}
+
+export function tick_noRythmBar(rythm, cursors){
+    rythm.subTick.idx++;
+    if(!rythm.movedSinceLastTick){
+        if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
+            if(!rythm_breakable){
+                move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
+            }
+            rythm.movedSinceLastTick = true;
+        }
+    }
+    if(rythm.subTick.idx > numberOfTicks){
+        rythm.subTick.idx = 1;
+        rythm.movedSinceLastTick = false;
+    }
+}
 
 

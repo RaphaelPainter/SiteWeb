@@ -1,4 +1,3 @@
-refactor(tick functions => units.js)
 feat(buttons => left of the canvas)
 feat(game over => need to restart or choose level )
 feat(choose level with button click)
