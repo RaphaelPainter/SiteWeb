@@ -33,7 +33,7 @@ var config = {
 
 var tiles;
 
-var player;
+var units;
 var player_unit
 
 var cursors;
@@ -46,6 +46,8 @@ function preload ()
 {
     this.load.image('tile', 'assets/tile.png');
     this.load.image('player', 'assets/player.png');
+    this.load.image('mob', 'assets/mob.png');
+
 }
 
 function create ()
@@ -62,8 +64,8 @@ function create ()
     }
 
     //player
-    player = this.physics.add.staticGroup();
-    player_unit = player.create(0,0,'player');
+    units = this.physics.add.staticGroup();
+    player_unit = units.create(0,0,'player');
     player_unit.setScale(zoom_());
     move_a(player_unit, 0, 0);
 
@@ -89,6 +91,13 @@ function create ()
     if(rythm_breakable){
         event_rythmBreakable(document, player_unit, rythm.subTick);
     }
+
+    //generating MAP
+    //mobs
+    let unit = units.create(0,0,'mob');
+    unit.setScale(zoom_());
+    move_a(unit, 5, 5);
+
 }
 
 
