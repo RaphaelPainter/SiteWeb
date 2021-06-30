@@ -34,7 +34,8 @@ var config = {
 var tiles;
 
 var units;
-var player_unit
+var mobs = [];
+var player_unit;
 
 var cursors;
 
@@ -80,11 +81,11 @@ function create ()
         if(rythm_bar_displayed){
             init_rythm_var(rythm);
             setInterval(()=>{
-                tick_withRythmBar(rythm, cursors)
+                tick_withRythmBar(rythm, cursors,player_unit)
             } ,time_between_ticks);
         }else{
             setInterval(()=>{
-                tick_noRythmBar(rythm, cursors)
+                tick_noRythmBar(rythm, cursors, player_unit)
             }, time_between_ticks);
         }
     }
@@ -95,9 +96,9 @@ function create ()
     //generating MAP
     //mobs
     let unit = units.create(0,0,'mob');
+    mobs.push(unit);
     unit.setScale(zoom_());
     move_a(unit, 5, 5);
-
 }
 
 

@@ -112,7 +112,7 @@ export function zoomEvent(event, player, tiles) {
 
 
 export var rythm_activated = true;
-export var rythm_breakable = true;
+export var rythm_breakable = false;
 export var rythm_bar_displayed = true;
 export var numberOfTicks = 20;
 export var rythm_char = '⯀';
@@ -130,7 +130,10 @@ export function event_rythmBreakable(document, player_unit, subTick){
             }if(e.keyCode == 40 ){
                 move_r(player_unit, 0,1);
             }
-            subTick.idx = 1;
+            subTick.idx = 1;  
+            if(rythm_breakable){
+                tick();
+            } 
         }
   });
 }
@@ -144,7 +147,7 @@ export function init_rythm_var(rythm){
   }
 
 
-  export function tick_withRythmBar(rythm, cursors){
+  export function tick_withRythmBar(rythm, cursors,player_unit){
     rythm.subTick.idx++;
     rythm.bar.innerHTML = 
     rythm.text.substr(rythm.subTick.idx-2,numberOfTicks);
@@ -152,6 +155,7 @@ export function init_rythm_var(rythm){
         if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
             if(!rythm_breakable){
                 move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
+                tick();
             }
             rythm.movedSinceLastTick = true;
         }
@@ -162,12 +166,13 @@ export function init_rythm_var(rythm){
     }
 }
 
-export function tick_noRythmBar(rythm, cursors){
+export function tick_noRythmBar(rythm, cursors,player_unit){
     rythm.subTick.idx++;
     if(!rythm.movedSinceLastTick){
         if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){
             if(!rythm_breakable){
                 move_r(player_unit, input_xaxis(cursors), input_yaxis(cursors));
+                tick();
             }
             rythm.movedSinceLastTick = true;
         }
@@ -176,6 +181,10 @@ export function tick_noRythmBar(rythm, cursors){
         rythm.subTick.idx = 1;
         rythm.movedSinceLastTick = false;
     }
+}
+
+export function tick(){
+    console.log("bla");
 }
 
 
