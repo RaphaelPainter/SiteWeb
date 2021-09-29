@@ -1,4 +1,3 @@
-feat(buttons => left of the canvas)
 feat(mob behavior: skill and move)
 feat(move: pathfinding)
 feat(skill: punch)
@@ -7,3 +6,7 @@ feat(skill: laser)
 feat(game over => need to restart or choose level )
 feat(choose level with button click)
 feat(mobs that do an action when tick: move or use skill)
+
+multijoueur avec MQTT
+
+
