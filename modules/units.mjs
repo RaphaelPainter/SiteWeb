@@ -1,4 +1,5 @@
 
+//LOGGING
 const logMode = false;
 function log(msg){
     if(logMode){
@@ -6,30 +7,29 @@ function log(msg){
     }
 }
 
+//APPLY TO ALL
 export function apply(group, fun, ... param){
     group.getChildren().forEach(e => {
         fun(e, param);
     });
 }
 
+//GRID CONFIG
 export const world_offset_height= 50;
 export const world_offset_width = 50;
-
 export const grid_width = 10;
 export const grid_height= 10;
-
 export const grid_gap_height = 1;
 export const grid_gap_width= 1;
-
 export const tile_height = 64;
 export const tile_width= 64;
 
 
+// GRID MOVEMENT
 export function refreshPosition(unit){
         unit.setX(world_offset_width+unit.idx *(tile_width+grid_gap_width)*zoom)
         unit.setY(world_offset_height+unit.idy *(tile_height+grid_gap_height)*zoom)
-    }
-
+}
 export function move_a(unit,width_idx,height_idx){
     if(isValidPosition(width_idx, height_idx)){
         unit.idx = width_idx;
@@ -40,11 +40,9 @@ export function move_a(unit,width_idx,height_idx){
         log(unit.texture.key + "=/>"+height_idx+","+width_idx)
     }
 }
-
 export function move_r(unit,height_offset , width_offset){
     move_a(unit,unit.idx+height_offset , unit.idy+width_offset)
 } 
-
 export function isValidPosition(height_idx,width_idx){
     if(height_idx < 0 || height_idx >= grid_height){
         return false;
@@ -55,12 +53,14 @@ export function isValidPosition(height_idx,width_idx){
     }
 }
 
+// CREATION
 export function new_(spriteName, group){
     let sprite = group.create(0,0,spriteName);
     sprite.setScale(zoom);
     return sprite;
 }
 
+// PLAYER INPUT
 export function input_yaxis(cursors){
     if(cursors.up.isUp && cursors.down.isUp){
         return 0;
@@ -70,7 +70,6 @@ export function input_yaxis(cursors){
         return 1;
     }
 }
-
 export function input_xaxis(cursors){
     if(cursors.right.isUp && cursors.left.isUp){
         return 0;
@@ -81,27 +80,22 @@ export function input_xaxis(cursors){
     }
 }
 
+//ZOOM
 export var zoom = 0.5;
-
-
 export function zoom_group(value, group){
     apply(group, zoom_unit, value);
     apply(group, refreshPosition)
 }
-
 function zoom_unit(unit, value){
     unit.setScale(value)
 }
-
 export function resizeWorld(value, ... groups){
     zoom = value;
     groups.forEach(e=> {zoom_group(value, e)})
 }
-
 export function zoom_(){
     return zoom;
 }
-
 export function zoomEvent(event, player, tiles) {
     if(event.deltaY < 0 && zoom_() < 4.5 ){
         resizeWorld(zoom_()-event.deltaY/100*0.25, player, tiles);
@@ -110,14 +104,15 @@ export function zoomEvent(event, player, tiles) {
     }
 }
 
-
+// RYTHM CONGIG
 export var rythm_activated = true;
-export var rythm_breakable = false;
+export var rythm_breakable = true;
 export var rythm_bar_displayed = true;
 export var numberOfTicks = 20;
 export var rythm_char = '⯀';
 export var time_between_ticks = 20;
 
+//RYTHM
 export function event_rythmBreakable(document, player_unit, subTick){
     document.addEventListener('keydown', (e) => {
         if(!e.repeat ){
@@ -137,7 +132,6 @@ export function event_rythmBreakable(document, player_unit, subTick){
         }
   });
 }
-
 export function init_rythm_var(rythm){
     rythm.bar = document.getElementById("rythm_bar");
     rythm.text="";
@@ -145,8 +139,6 @@ export function init_rythm_var(rythm){
         rythm.text += rythm_char; 
     }
   }
-
-
   export function tick_withRythmBar(rythm, cursors,player_unit){
     rythm.subTick.idx++;
     rythm.bar.innerHTML = 
@@ -165,7 +157,6 @@ export function init_rythm_var(rythm){
         rythm.movedSinceLastTick = false;
     }
 }
-
 export function tick_noRythmBar(rythm, cursors,player_unit){
     rythm.subTick.idx++;
     if(!rythm.movedSinceLastTick){
@@ -182,8 +173,8 @@ export function tick_noRythmBar(rythm, cursors,player_unit){
         rythm.movedSinceLastTick = false;
     }
 }
-
 export function tick(){
+    //TODO: units -> tick -> units.behavior -> units.play()
     console.log("bla");
 }
 
