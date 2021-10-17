@@ -1,16 +1,25 @@
 
 import { 
-    grid_width, grid_height,
-    move_a,move_r,
-    zoom_,
     new_,
-    
+} from './modules/misc.mjs'; 
 
-    rythm_activated,rythm_bar_displayed,rythm_breakable, 
+import { 
+    rythm_activated,
+    rythm_bar_displayed,
+    rythm_breakable, 
     time_between_ticks, 
-    event_rythmBreakable,init_rythm_var,
-    tick_withRythmBar,tick_noRythmBar,
-} from './modules/units.mjs'; 
+    event_rythmBreakable,
+    init_rythm_var,
+    tick_withRythmBar,
+    tick_noRythmBar,
+} from './modules/rythm.mjs'; 
+
+import { 
+    grid_width, 
+    grid_height, 
+    move_a, 
+    zoom_
+} from './modules/grid.mjs'; 
 
 
 var config = {
