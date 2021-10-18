@@ -42,7 +42,7 @@ var config = {
 
 var tiles;
 
-var units;
+export var units;
 var mobs = [];
 var player_unit;
 

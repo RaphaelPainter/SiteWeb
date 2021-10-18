@@ -10,6 +10,11 @@ import {
 import { 
     log
 } from './log.mjs'; 
+import { apply } from './tools.mjs';
+
+import{
+    units
+}from '../main.mjs'; 
 
 
 // RYTHM CONGIG
@@ -83,5 +88,11 @@ export function tick_noRythmBar(rythm, cursors,player_unit){
 }
 export function tick(){
     //TODO: units -> tick -> units.behavior -> units.play()
-    log("bla");
+    
+    apply(units, dosomething, "blarg")
 }
+
+function dosomething(unit, value){
+    log(unit.x +" "+ value);
+}
+
