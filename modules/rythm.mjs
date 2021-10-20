@@ -13,7 +13,8 @@ import {
 import { apply } from './tools.mjs';
 
 import{
-    units
+    units,
+    cursors
 }from '../main.mjs'; 
 
 
@@ -52,7 +53,7 @@ export function init_rythm_var(rythm){
         rythm.text += rythm_char; 
     }
   }
-  export function tick_withRythmBar(rythm, cursors,player_unit){
+  export function tick_withRythmBar(rythm,player_unit){
     rythm.subTick.idx++;
     rythm.bar.innerHTML = 
     rythm.text.substr(rythm.subTick.idx-2,numberOfTicks);
@@ -70,7 +71,7 @@ export function init_rythm_var(rythm){
         rythm.movedSinceLastTick = false;
     }
 }
-export function tick_noRythmBar(rythm, cursors,player_unit){
+export function tick_noRythmBar(rythm,player_unit){
     rythm.subTick.idx++;
     if(!rythm.movedSinceLastTick){
         if( input_xaxis(cursors) != 0 || input_yaxis(cursors) != 0){

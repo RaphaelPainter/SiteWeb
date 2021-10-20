@@ -44,9 +44,9 @@ var tiles;
 
 export var units;
 var mobs = [];
-var player_unit;
+export var player_unit;
 
-var cursors;
+export var cursors;
 
 var rythm = {};
 
