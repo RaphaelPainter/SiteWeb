@@ -1,25 +1,24 @@
-
-import { 
+import {
     new_,
-} from './modules/misc.mjs'; 
+} from './modules/misc.mjs';
 
-import { 
+import {
     rythm_activated,
     rythm_bar_displayed,
-    rythm_breakable, 
-    time_between_ticks, 
+    rythm_breakable,
+    time_between_ticks,
     event_rythmBreakable,
     init_rythm_var,
     tick_withRythmBar,
     tick_noRythmBar,
-} from './modules/rythm.mjs'; 
+} from './modules/rythm.mjs';
 
-import { 
-    grid_width, 
-    grid_height, 
-    move_a, 
+import {
+    grid_width,
+    grid_height,
+    move_a,
     zoom_
-} from './modules/grid.mjs'; 
+} from './modules/grid.mjs';
 
 import{
     Graph 
@@ -47,9 +46,9 @@ var tiles;
 
 export var units;
 var mobs = [];
-var player_unit;
+export var player_unit;
 
-var cursors;
+export var cursors;
 
 var rythm = {};
 
@@ -57,24 +56,21 @@ var game = new Phaser.Game(config);
 
 var graph;
 
-function preload ()
-{
+function preload() {
     this.load.image('tile', 'assets/tile.png');
     this.load.image('player', 'assets/player.png');
     this.load.image('mob', 'assets/mob.png');
-
 }
 
-function create ()
-{
+function create() {
     console.clear();
 
     // grid
     tiles = this.physics.add.staticGroup();
-    for(let i = 0;i<grid_height;i++){
-        for(let j = 0;j<grid_width;j++){
-           let tile = new_('tile',tiles);
-           move_a(tile, i, j);
+    for (let i = 0; i < grid_height; i++) {
+        for (let j = 0; j < grid_width; j++) {
+            let tile = new_('tile', tiles);
+            move_a(tile, i, j);
         }
     }
 
@@ -88,8 +84,10 @@ function create ()
 
     //player
     units = this.physics.add.staticGroup();
-    player_unit = units.create(0,0,'player');
+    player_unit = units.create(0, 0, 'player');
     player_unit.setScale(zoom_());
+    player_unit.type = "player"
+    player_unit.id = "1"
     move_a(player_unit, 0, 0);
 
     //user inputs
@@ -99,39 +97,32 @@ function create ()
     rythm.subTick = {};
     rythm.movedSinceLastTick = false;
 
-    if(rythm_activated){
-        if(rythm_bar_displayed){
+    if (rythm_activated) {
+        if (rythm_bar_displayed) {
             init_rythm_var(rythm);
-            setInterval(()=>{
-                tick_withRythmBar(rythm, cursors,player_unit)
-            } ,time_between_ticks);
-        }else{
-            setInterval(()=>{
+            setInterval(() => {
+                tick_withRythmBar(rythm, cursors, player_unit)
+            }, time_between_ticks);
+        } else {
+            setInterval(() => {
                 tick_noRythmBar(rythm, cursors, player_unit)
             }, time_between_ticks);
         }
     }
-    if(rythm_breakable){
+    if (rythm_breakable) {
         event_rythmBreakable(document, player_unit, rythm.subTick);
     }
 
     //generating MAP
     //mobs
-    let unit = units.create(0,0,'mob');
+    let unit = units.create(0, 0, 'mob');
     mobs.push(unit);
     unit.setScale(zoom_());
+    unit.type = "mob"
+    unit.id = "2"
     move_a(unit, 5, 5);
 }
-
-
 
 function update() {
 
 }
-
-
-
-
-
-
-
