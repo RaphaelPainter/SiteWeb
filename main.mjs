@@ -21,6 +21,9 @@ import {
     zoom_
 } from './modules/grid.mjs'; 
 
+import{
+    Graph 
+}from './modules/graph/graph.mjs';
 
 var config = {
     type: Phaser.AUTO,
@@ -52,6 +55,8 @@ var rythm = {};
 
 var game = new Phaser.Game(config);
 
+var graph;
+
 function preload ()
 {
     this.load.image('tile', 'assets/tile.png');
@@ -63,7 +68,7 @@ function preload ()
 function create ()
 {
     console.clear();
-    
+
     // grid
     tiles = this.physics.add.staticGroup();
     for(let i = 0;i<grid_height;i++){
@@ -73,6 +78,14 @@ function create ()
         }
     }
 
+    //graph
+    //TODO generate graph with grid tiles
+    graph = new Graph();
+    graph.addVertex(vertex1)
+    graph.addVertex(vertex2)
+    graph.addEdge(vertex1,vertex2,3)
+    graph.addEdge(vertex1,vertex3,3)
+
     //player
     units = this.physics.add.staticGroup();
     player_unit = units.create(0,0,'player');
@@ -81,7 +94,7 @@ function create ()
 
     //user inputs
     cursors = this.input.keyboard.createCursorKeys();
-    
+
     //setup tick calls
     rythm.subTick = {};
     rythm.movedSinceLastTick = false;
