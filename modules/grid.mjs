@@ -21,6 +21,14 @@ export function getTile(x, y, tiles) {
     return tiles.getChildren()[y * grid_gap_width + x]
 }
 
+//TODO
+export function getRelativeTile(x, y, tiles, offset_x, offset_y) {
+    if ((y * grid_gap_width + x) > tiles.getChildren().length || (x + y) < 0) {
+        log(x + " " + y + "is not in the grid")
+    }
+    return tiles.getChildren()[y * grid_gap_width + x]
+}
+
 //MOVEMENT
 export function refreshPosition(unit) {
     unit.setX(world_offset_width + unit.idx * (tile_width + grid_gap_width) * zoom)
