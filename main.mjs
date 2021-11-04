@@ -17,12 +17,13 @@ import {
     grid_width,
     grid_height,
     move_a,
-    zoom_
+    zoom_,
+    getTile
 } from './modules/grid.mjs';
 
-import{
-    Graph 
-}from './modules/graph/graph.mjs';
+import {
+    Graph
+} from './modules/graph/graph.mjs';
 
 var config = {
     type: Phaser.AUTO,
@@ -75,12 +76,15 @@ function create() {
     }
 
     //graph
-    //TODO generate graph with grid tiles
     graph = new Graph();
-    graph.addVertex(vertex1)
-    graph.addVertex(vertex2)
-    graph.addEdge(vertex1,vertex2,3)
-    graph.addEdge(vertex1,vertex3,3)
+    for (let i = 0; i < grid_height; i++) {
+        for (let j = 0; j < grid_width; j++) {
+            let tile = getTile(i, j, tiles)
+            graph.addVertex(tile)
+                //graph.addEdge(vertex1, vertex2, 3)
+        }
+    }
+
 
     //player
     units = this.physics.add.staticGroup();
