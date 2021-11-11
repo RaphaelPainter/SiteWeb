@@ -81,8 +81,10 @@ function create() {
         for (let j = 0; j < grid_width; j++) {
             let tile = getTile(i, j, tiles)
             graph.addVertex(tile)
-            if (x)
-            //graph.addEdge(vertex1, vertex2, 3)
+            if (i >0){
+                graph.addEdge(tile, getTile(i-1, j, tiles), 1)
+            }
+            //TODO
         }
     }
 
